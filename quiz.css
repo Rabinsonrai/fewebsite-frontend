@@ -1,0 +1,227 @@
+/* =========================
+   QUIZ SECTION
+========================= */
+
+.quiz-section {
+    max-width: 750px;
+    margin: auto;
+    padding: 70px 25px 120px;
+}
+
+.quiz-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.quiz-header h1 {
+    font-family: var(--font-display);
+    font-size: 34px;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+    color: var(--ink);
+}
+
+.quiz-progress {
+    font-family: var(--font-mono);
+    color: var(--graphite);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================
+   EXAM TABS
+========================= */
+
+.exam-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 28px;
+}
+
+.exam-tab {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+
+    background: var(--paper-raised);
+    color: var(--graphite);
+    border: 1.5px solid var(--hairline);
+    border-radius: 3px;
+
+    padding: 9px 22px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.exam-tab:hover {
+    border-color: var(--blueprint);
+    color: var(--blueprint);
+}
+
+.exam-tab.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+}
+
+.quiz-state {
+    background: var(--paper-raised);
+    border: 1.5px solid var(--hairline);
+    border-radius: 4px;
+    padding: 40px 30px;
+    text-align: center;
+    color: var(--graphite);
+}
+
+.quiz-state code {
+    background: var(--blueprint-tint);
+    color: var(--blueprint);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+}
+
+
+/* =========================
+   QUESTION CARD
+========================= */
+
+.question-card {
+    position: relative;
+    background: var(--paper-raised);
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    padding: 35px;
+}
+
+.question-subject {
+    display: inline-block;
+    font-family: var(--font-mono);
+    background: var(--blueprint-tint);
+    color: var(--blueprint);
+    padding: 5px 12px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 18px;
+}
+
+.question-text {
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    color: var(--ink);
+}
+
+.choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.choice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1.5px solid var(--hairline);
+    border-radius: 3px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: 0.15s;
+    font-family: var(--font-body);
+}
+
+.choice:hover {
+    border-color: var(--blueprint);
+    background: var(--blueprint-tint);
+}
+
+.choice.selected {
+    border-color: var(--blueprint);
+    background: var(--blueprint-tint);
+}
+
+.choice.correct {
+    border-color: #3FB878;
+    background: rgba(63, 184, 120, 0.12);
+}
+
+.choice.incorrect {
+    border-color: var(--safety);
+    background: rgba(232, 118, 62, 0.12);
+}
+
+.choice input {
+    accent-color: var(--blueprint);
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.quiz-button {
+    font-family: var(--font-mono);
+    background: var(--blueprint);
+    color: var(--on-accent);
+    border: 1.5px solid var(--blueprint);
+    border-radius: 3px;
+    padding: 13px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.quiz-button:hover {
+    background: #7CC0EA;
+}
+
+.quiz-button:disabled {
+    background: var(--hairline);
+    border-color: var(--hairline);
+    color: var(--graphite);
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   FEEDBACK
+========================= */
+
+.feedback {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1.5px solid var(--hairline);
+}
+
+.feedback-result {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.feedback-result.correct {
+    color: #3FB878;
+}
+
+.feedback-result.incorrect {
+    color: var(--safety);
+}
+
+.feedback-explanation {
+    font-family: var(--font-body);
+    color: var(--graphite);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
