@@ -11,79 +11,6 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="quiz.css">
-
-    <!--
-        Layout + styling for the FE reference-PDF side panel.
-        Kept inline here rather than in quiz.css so it's self-contained;
-        move it into quiz.css later if you'd rather keep styles unified.
-    -->
-    <style>
-        .quiz-layout {
-            display: flex;
-            align-items: flex-start;
-            gap: 24px;
-        }
-
-        .quiz-layout .quiz-section {
-            flex: 1 1 90%;
-            min-width: 0; /* allows the flex child to shrink below content width */
-        }
-
-        #pdfPanel {
-            flex: 1 1 10%;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #f7f7f7;
-        }
-
-        .pdf-panel-body {
-            padding: 24px;
-            font-family: "Source Serif 4", serif;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .pdf-panel-body p {
-            margin: 0 0 16px;
-        }
-
-        .pdf-panel-link {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #111;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 6px;
-            font-family: "Space Grotesk", sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .pdf-panel-note {
-            margin-top: 16px;
-            font-family: "IBM Plex Mono", monospace;
-            font-size: 0.78rem;
-            color: #777;
-        }
-
-        .pdf-panel-header {
-            padding: 10px 14px;
-            font-family: "Space Grotesk", sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border-bottom: 1px solid #ddd;
-            background: #fff;
-        }
-
-        /* Stack the PDF panel below the quiz on narrow screens instead
-           of squeezing them side by side. */
-        @media (max-width: 900px) {
-            .quiz-layout {
-                flex-direction: column;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -107,11 +34,9 @@
     </header>
 
 
-    <div class="quiz-layout">
+    <section class="quiz-section">
 
-        <section class="quiz-section">
-
-            <div class="quiz-container">
+        <div class="quiz-container">
 
                 <div class="quiz-header">
                     <h1>Practice Questions</h1>
@@ -248,42 +173,9 @@
 
                 </div>
 
-            </div>
+        </div>
 
-        </section>
-
-
-        <!-- FE reference handbook panel — shown only while the FE tab is active.
-             Links out to NCEES's own site rather than hosting the PDF
-             ourselves: NCEES's terms prohibit redistributing the handbook
-             ("may not be copied, reproduced, distributed electronically or
-             in print, or posted online without written permission from
-             NCEES"), so pointing people to get it through their own
-             MyNCEES account is the compliant option. -->
-        <aside id="pdfPanel" style="display: none;">
-            <div class="pdf-panel-header">FE Reference Handbook</div>
-            <div class="pdf-panel-body">
-                <p>
-                    The FE exam is open-book, but only the official NCEES
-                    FE Reference Handbook is allowed — and it's supplied
-                    on-screen during the actual exam. Get familiar with it
-                    now so you're not seeing it for the first time on test day.
-                </p>
-                <a
-                    class="pdf-panel-link"
-                    href="https://help.ncees.org/article/87-ncees-exam-reference-handbooks"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Get the Handbook from NCEES →
-                </a>
-                <p class="pdf-panel-note">
-                    Requires a free MyNCEES account. We link out rather than
-                    hosting a copy ourselves, per NCEES's redistribution terms.
-                </p>
-            </div>
-        </aside>
-
-    </div>
+    </section>
 
 
     <script src="quiz.js"></script>
