@@ -76,6 +76,7 @@ const nextBtn = document.getElementById("nextBtn");
 const examTabs = document.querySelectorAll(".exam-tab");
 const greTabs = document.getElementById("greTabs");
 const greCategoryTabs = document.querySelectorAll(".gre-category-tab");
+const pdfPanel = document.getElementById("pdfPanel");
 
 const quantSubTabs = document.getElementById("quantSubTabs");
 const verbalSubTabs = document.getElementById("verbalSubTabs");
@@ -127,6 +128,15 @@ function updateGRETabs() {
     }
 }
 
+// Shows the FE reference PDF panel only while the FE tab is active.
+function updatePdfPanel() {
+    if (currentExam === "FE") {
+        pdfPanel.style.display = "block";
+    } else {
+        pdfPanel.style.display = "none";
+    }
+}
+
 function updateGRESubTabs() {
     if (currentGRECategory === "quant") {
         quantSubTabs.style.display = "flex";
@@ -148,6 +158,7 @@ async function loadQuestions(exam, greCategory = "quant", greSubsection = "all")
     setActiveGRECategory(greCategory);
     setActiveGRESubsection(greCategory, greSubsection);
     updateGRETabs();
+    updatePdfPanel();
 
     questionCard.style.display = "none";
     doneState.style.display = "none";

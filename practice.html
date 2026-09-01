@@ -11,6 +11,64 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="quiz.css">
+
+    <!--
+        Layout + styling for the FE reference-PDF side panel.
+        Kept inline here rather than in quiz.css so it's self-contained;
+        move it into quiz.css later if you'd rather keep styles unified.
+    -->
+    <style>
+        .quiz-layout {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .quiz-layout .quiz-section {
+            flex: 1 1 50%;
+            min-width: 0; /* allows the flex child to shrink below content width */
+        }
+
+        #pdfPanel {
+            flex: 1 1 50%;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f7f7f7;
+        }
+
+        #pdfPanel iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .pdf-panel-header {
+            padding: 10px 14px;
+            font-family: "Space Grotesk", sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #ddd;
+            background: #fff;
+        }
+
+        /* Stack the PDF panel below the quiz on narrow screens instead
+           of squeezing them side by side. */
+        @media (max-width: 900px) {
+            .quiz-layout {
+                flex-direction: column;
+            }
+
+            #pdfPanel {
+                position: static;
+                width: 100%;
+                height: 70vh;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -34,148 +92,171 @@
     </header>
 
 
-    <section class="quiz-section">
+    <div class="quiz-layout">
 
-        <div class="quiz-container">
+        <section class="quiz-section">
 
-            <div class="quiz-header">
-                <h1>Practice Questions</h1>
-                <div class="quiz-progress" id="progress">Loading questions...</div>
-            </div>
+            <div class="quiz-container">
 
-
-            <!-- Main exam tabs -->
-            <div class="exam-tabs" role="tablist">
-
-                <button class="exam-tab" data-exam="FE" role="tab">
-                    FE
-                </button>
-
-                <button class="exam-tab" data-exam="PE" role="tab">
-                    PE
-                </button>
-
-                <button class="exam-tab" data-exam="GRE" role="tab">
-                    GRE
-                </button>
-
-            </div>
+                <div class="quiz-header">
+                    <h1>Practice Questions</h1>
+                    <div class="quiz-progress" id="progress">Loading questions...</div>
+                </div>
 
 
-            <!-- GRE top-level category tabs -->
-            <div id="greTabs" class="gre-tabs" style="display: none;" role="tablist">
+                <!-- Main exam tabs -->
+                <div class="exam-tabs" role="tablist">
 
-                <button class="gre-category-tab active" data-category="quant" role="tab">
-                    Quantitative
-                </button>
-
-                <button class="gre-category-tab" data-category="verbal" role="tab">
-                    Verbal
-                </button>
-
-            </div>
-
-
-            <!-- GRE Quantitative subsections -->
-            <div id="quantSubTabs" class="gre-subtabs" style="display: none;" role="tablist">
-
-                <button class="gre-subtab active" data-subsection="all" role="tab">
-                    All
-                </button>
-
-                <button class="gre-subtab" data-subsection="arithmetic" role="tab">
-                    Arithmetic
-                </button>
-
-                <button class="gre-subtab" data-subsection="algebra" role="tab">
-                    Algebra
-                </button>
-
-                <button class="gre-subtab" data-subsection="geometry" role="tab">
-                    Geometry
-                </button>
-
-                <button class="gre-subtab" data-subsection="data-analysis" role="tab">
-                    Data Analysis
-                </button>
-
-            </div>
-
-
-            <!-- GRE Verbal subsections -->
-            <div id="verbalSubTabs" class="gre-subtabs" style="display: none;" role="tablist">
-
-                <button class="gre-subtab active" data-subsection="all" role="tab">
-                    All
-                </button>
-
-                <button class="gre-subtab" data-subsection="text-completion" role="tab">
-                    Text Completion
-                </button>
-
-                <button class="gre-subtab" data-subsection="sentence-equivalence" role="tab">
-                    Sentence Equivalence
-                </button>
-
-                <button class="gre-subtab" data-subsection="reading-comprehension" role="tab">
-                    Reading Comprehension
-                </button>
-
-            </div>
-
-
-            <div id="loadingState" class="quiz-state">
-                <p>Loading questions from the server...</p>
-            </div>
-
-
-            <div id="errorState" class="quiz-state" style="display: none;">
-                <p>
-                    Couldn't load questions. Make sure the backend
-                    server is running at <code id="apiUrlDisplay"></code>
-                    and try refreshing this page.
-                </p>
-            </div>
-
-
-            <div id="doneState" class="quiz-state" style="display: none;">
-                <h2>You've finished this set 🎉</h2>
-                <p>
-                    Switch tabs above to try another section,
-                    or refresh to practice again.
-                </p>
-            </div>
-
-
-            <div id="questionCard" class="question-card" style="display: none;">
-
-                <div class="question-subject" id="questionSubject"></div>
-
-                <p class="question-text" id="questionText"></p>
-
-                <div class="choices" id="choicesList"></div>
-
-                <button id="submitBtn" class="quiz-button" disabled>
-                    Submit Answer
-                </button>
-
-                <div id="feedback" class="feedback" style="display: none;">
-
-                    <div id="feedbackResult" class="feedback-result"></div>
-
-                    <p id="feedbackExplanation" class="feedback-explanation"></p>
-
-                    <button id="nextBtn" class="quiz-button">
-                        Next Question →
+                    <button class="exam-tab" data-exam="FE" role="tab">
+                        FE
                     </button>
+
+                    <button class="exam-tab" data-exam="PE" role="tab">
+                        PE
+                    </button>
+
+                    <button class="exam-tab" data-exam="GRE" role="tab">
+                        GRE
+                    </button>
+
+                </div>
+
+
+                <!-- GRE top-level category tabs -->
+                <div id="greTabs" class="gre-tabs" style="display: none;" role="tablist">
+
+                    <button class="gre-category-tab active" data-category="quant" role="tab">
+                        Quantitative
+                    </button>
+
+                    <button class="gre-category-tab" data-category="verbal" role="tab">
+                        Verbal
+                    </button>
+
+                </div>
+
+
+                <!-- GRE Quantitative subsections -->
+                <div id="quantSubTabs" class="gre-subtabs" style="display: none;" role="tablist">
+
+                    <button class="gre-subtab active" data-subsection="all" role="tab">
+                        All
+                    </button>
+
+                    <button class="gre-subtab" data-subsection="arithmetic" role="tab">
+                        Arithmetic
+                    </button>
+
+                    <button class="gre-subtab" data-subsection="algebra" role="tab">
+                        Algebra
+                    </button>
+
+                    <button class="gre-subtab" data-subsection="geometry" role="tab">
+                        Geometry
+                    </button>
+
+                    <button class="gre-subtab" data-subsection="data-analysis" role="tab">
+                        Data Analysis
+                    </button>
+
+                </div>
+
+
+                <!-- GRE Verbal subsections -->
+                <div id="verbalSubTabs" class="gre-subtabs" style="display: none;" role="tablist">
+
+                    <button class="gre-subtab active" data-subsection="all" role="tab">
+                        All
+                    </button>
+
+                    <button class="gre-subtab" data-subsection="text-completion" role="tab">
+                        Text Completion
+                    </button>
+
+                    <button class="gre-subtab" data-subsection="sentence-equivalence" role="tab">
+                        Sentence Equivalence
+                    </button>
+
+                    <button class="gre-subtab" data-subsection="reading-comprehension" role="tab">
+                        Reading Comprehension
+                    </button>
+
+                </div>
+
+
+                <div id="loadingState" class="quiz-state">
+                    <p>Loading questions from the server...</p>
+                </div>
+
+
+                <div id="errorState" class="quiz-state" style="display: none;">
+                    <p>
+                        Couldn't load questions. Make sure the backend
+                        server is running at <code id="apiUrlDisplay"></code>
+                        and try refreshing this page.
+                    </p>
+                </div>
+
+
+                <div id="doneState" class="quiz-state" style="display: none;">
+                    <h2>You've finished this set 🎉</h2>
+                    <p>
+                        Switch tabs above to try another section,
+                        or refresh to practice again.
+                    </p>
+                </div>
+
+
+                <div id="questionCard" class="question-card" style="display: none;">
+
+                    <div class="question-subject" id="questionSubject"></div>
+
+                    <p class="question-text" id="questionText"></p>
+
+                    <div class="choices" id="choicesList"></div>
+
+                    <button id="submitBtn" class="quiz-button" disabled>
+                        Submit Answer
+                    </button>
+
+                    <div id="feedback" class="feedback" style="display: none;">
+
+                        <div id="feedbackResult" class="feedback-result"></div>
+
+                        <p id="feedbackExplanation" class="feedback-explanation"></p>
+
+                        <button id="nextBtn" class="quiz-button">
+                            Next Question →
+                        </button>
+
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
+        </section>
 
-    </section>
+
+        <!-- FE reference PDF side panel — shown only while the FE tab is active.
+             Path is relative to practice.html (not absolute), so it works
+             correctly both when opened directly as a file:// URL and when
+             deployed behind any static host.
+
+             The #toolbar=1&navpanes=0 fragment tells the browser's built-in
+             PDF viewer (Chrome/Edge/Firefox all support this) to show its
+             toolbar, which includes zoom in/out, a search icon, and page
+             scroll — no extra JS needed, it's native browser behavior. -->
+        <aside id="pdfPanel" style="display: none;">
+            <div class="pdf-panel-header">FE Reference Handbook</div>
+            <iframe
+                id="pdfFrame"
+                src="assets/fe-handbook-10-6.pdf#toolbar=1&navpanes=0"
+                title="FE Reference Handbook">
+            </iframe>
+        </aside>
+
+    </div>
 
 
     <script src="quiz.js"></script>
