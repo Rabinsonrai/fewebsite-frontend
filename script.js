@@ -1,28 +1,5 @@
-function scrollToTools() {
-    document.getElementById("tools").scrollIntoView({
-        behavior: "smooth"
-    });
-}
-
-
-function showMessage() {
-    alert(
-        "CivilTech is a civil engineering platform designed to provide practical engineering tools."
-    );
-}
-
-
-function openTool(toolName) {
-
-    if (toolName === "Unit Converter") {
-
-        window.location.href = "tools/conversions.html";
-
-    } else {
-
-        alert(
-            toolName + " will be available soon."
-        );
-
-    }
-}
+// index.html — reserved for future homepage interactivity.
+// (Previous functions here — scrollToTools, openTool, showMessage —
+// were removed since the Tools section they supported was cut from
+// the site. The <script> tag stays in index.html so this file is
+// wired up and ready whenever you need JS again.)
