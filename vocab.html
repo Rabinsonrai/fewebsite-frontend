@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vocabulary | Civil Engineering Test Prep</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .vocab-section {
+            max-width: 640px;
+            margin: 60px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .vocab-progress {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .flashcard {
+            perspective: 1200px;
+            height: 320px;
+            margin-bottom: 24px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border: 1px solid #333;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            box-sizing: border-box;
+        }
+
+        .flashcard-front {
+            background: #111;
+            color: #f5f0e6;
+        }
+
+        .flashcard-front .word {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .flashcard-front .tap-hint {
+            margin-top: 20px;
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .flashcard-back {
+            background: #f5f0e6;
+            color: #111;
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-back .meaning {
+            font-family: "Source Serif 4", serif;
+            font-size: 1.15rem;
+            margin-bottom: 16px;
+        }
+
+        .flashcard-back .example {
+            font-family: "Source Serif 4", serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .vocab-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .vocab-button {
+            padding: 10px 18px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: transparent;
+            color: inherit;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .vocab-button.primary {
+            background: #111;
+            color: #f5f0e6;
+            border-color: #111;
+        }
+
+        .vocab-state {
+            font-family: "Source Serif 4", serif;
+            font-size: 1rem;
+            color: #999;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+
+            <div class="logo">
+                <svg class="logo-mark" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M10 1.5V4M10 16V18.5M1.5 10H4M16 10H18.5" stroke="currentColor" stroke-width="1.4"/>
+                </svg>
+                CivilTech
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="practice.html">Practice Tests</a>
+            </div>
+
+        </nav>
+    </header>
+
+
+    <section class="vocab-section">
+
+        <h1>GRE Vocabulary</h1>
+        <div class="vocab-progress" id="vocabProgress">Loading...</div>
+
+        <div id="loadingState">
+            <p>Loading vocabulary...</p>
+        </div>
+
+        <div id="errorState" class="vocab-state" style="display: none;">
+            <p>Couldn't load vocabulary. Make sure the backend server is running.</p>
+        </div>
+
+        <div id="emptyState" class="vocab-state" style="display: none;">
+            <p>No vocabulary words yet — add some to your <code>vocabulary</code> table.</p>
+        </div>
+
+        <div id="flashcardWrap" style="display: none;">
+
+            <div class="flashcard" id="flashcard">
+                <div class="flashcard-inner">
+
+                    <div class="flashcard-face flashcard-front">
+                        <div class="word" id="wordText"></div>
+                        <div class="tap-hint">Tap to reveal meaning</div>
+                    </div>
+
+                    <div class="flashcard-face flashcard-back">
+                        <p class="meaning" id="meaningText"></p>
+                        <p class="example" id="exampleText"></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="vocab-controls">
+                <button class="vocab-button" id="prevBtn">← Previous</button>
+                <button class="vocab-button primary" id="shuffleBtn">Shuffle</button>
+                <button class="vocab-button" id="nextBtn">Next →</button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="vocab.js"></script>
+</body>
+</html>

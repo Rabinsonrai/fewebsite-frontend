@@ -11,6 +11,121 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="quiz.css">
+
+    <!--
+        Styling for the timer, solved counter, flag button, question
+        navigator, and score summary. Kept inline here rather than in
+        quiz.css so it's self-contained; move it later if you'd rather
+        keep styles unified.
+    -->
+    <style>
+        .quiz-meta {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        #timerDisplay {
+            font-weight: 600;
+        }
+
+        .question-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 16px 0;
+        }
+
+        .nav-pill {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: transparent;
+            color: inherit;
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .nav-pill.solved {
+            background: #2e7d32;
+            border-color: #2e7d32;
+            color: #fff;
+        }
+
+        .nav-pill.flagged {
+            border-color: #f2b705;
+            box-shadow: inset 0 0 0 2px #f2b705;
+        }
+
+        .nav-pill.current {
+            outline: 2px solid #fff;
+            outline-offset: 1px;
+        }
+
+        .flag-button {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: transparent;
+            color: inherit;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .flag-button.active {
+            background: #f2b705;
+            border-color: #f2b705;
+            color: #111;
+        }
+
+        .score-line {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 0 8px;
+        }
+
+        .score-meta {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.85rem;
+            color: #aaa;
+            margin: 4px 0;
+        }
+
+        .finish-test-button {
+            margin-left: auto;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid #b33;
+            background: transparent;
+            color: #e66;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .finish-test-button:hover {
+            background: #b33;
+            color: #fff;
+        }
+
+        .pre-answer-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .quiz-button.secondary {
+            background: transparent;
+            border: 1px solid #666;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,6 +143,7 @@
 
             <div class="nav-links">
                 <a href="index.html">Home</a>
+                <a href="vocab.html">Vocabulary</a>
             </div>
 
         </nav>
@@ -41,6 +157,13 @@
                 <div class="quiz-header">
                     <h1>Practice Questions</h1>
                     <div class="quiz-progress" id="progress">Loading questions...</div>
+                    <div class="quiz-meta">
+                        <span id="timerDisplay">00:00</span>
+                        <span id="solvedCounter">0 / 0 answered</span>
+                        <button id="finishTestBtn" class="finish-test-button" type="button">
+                            Finish Test
+                        </button>
+                    </div>
                 </div>
 
 
@@ -124,6 +247,11 @@
                 </div>
 
 
+                <!-- Jump-to navigator: shows every question's number, colored
+                     by whether it's been answered and/or flagged. -->
+                <div id="questionNav" class="question-nav"></div>
+
+
                 <div id="loadingState" class="quiz-state">
                     <p>Loading questions from the server...</p>
                 </div>
@@ -140,6 +268,7 @@
 
                 <div id="doneState" class="quiz-state" style="display: none;">
                     <h2>You've finished this set 🎉</h2>
+                    <div id="scoreSummary" class="score-summary"></div>
                     <p>
                         Switch tabs above to try another section,
                         or refresh to practice again.
@@ -151,13 +280,23 @@
 
                     <div class="question-subject" id="questionSubject"></div>
 
+                    <button id="flagBtn" class="flag-button" type="button">
+                        🚩 Flag for review
+                    </button>
+
                     <p class="question-text" id="questionText"></p>
 
                     <div class="choices" id="choicesList"></div>
 
-                    <button id="submitBtn" class="quiz-button" disabled>
-                        Submit Answer
-                    </button>
+                    <div class="pre-answer-actions">
+                        <button id="submitBtn" class="quiz-button" disabled>
+                            Submit Answer
+                        </button>
+
+                        <button id="skipBtn" class="quiz-button secondary" type="button">
+                            Skip →
+                        </button>
+                    </div>
 
                     <div id="feedback" class="feedback" style="display: none;">
 
